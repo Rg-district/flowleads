@@ -36,8 +36,17 @@ export default function Home() {
     return () => clearInterval(t)
   }, [])
 
-  const handleForm = (e: React.FormEvent) => {
+  const handleForm = async (e: React.FormEvent) => {
     e.preventDefault()
+    try {
+      await fetch('/api/request', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      })
+    } catch (err) {
+      console.error('Form submission error:', err)
+    }
     setSubmitted(true)
   }
 
